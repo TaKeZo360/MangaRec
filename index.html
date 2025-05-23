@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Manga Info Showcase</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="input-cont">
+      <input type="search" id="searchInput" placeholder="Search manga title..." />
+      <button id="searchBtn" class="btn-man">Search</button>
+    </div>
+    
+    <div class="card" id="mangaCard" style="display:none;">
+      <div class="cover">
+        <img id="coverImg" src="" alt="Manga cover" />
+      </div>
+      <h2 id="title"></h2>
+      
+      <div class="top-info">
+        <span class="badge type-badge" id="typeBadge"></span>
+        <span class="badge launch-year-badge" id="yearBadge"></span>
+      </div>
+      
+      <div class="score"><i class="fas fa-star"></i> Score: <span id="score"></span></div>
+      
+      <div class="info-line">
+        <span class="section-label"><i class="fas fa-signal"></i> Status:</span>
+        <span id="status"></span>
+      </div>
+      
+      <div class="info-line">
+        <span class="section-label"><i class="fas fa-tags"></i> Genres:</span>
+        <span id="genres"></span>
+      </div>
+      
+      <p class="description" id="desc"></p>
+      <a href="#" id="readBtn" target="_blank" class="read-link"><i class="fas fa-book-reader"></i> Read Now</a>
+    </div>
+  </div>
+  <script src="main.js"></script>
+</body>
+
+</html>

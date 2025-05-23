@@ -1,0 +1,191 @@
+body {
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #222;
+    color: #eee;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: clamp(350px, 70vw, 1100px);
+    margin: auto 0;
+}
+
+.input-cont {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+input[type="search"] {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: none;
+    background: #444;
+    color: #eee;
+    outline: none;
+}
+
+input[type="search"]::placeholder {
+    color: #bbb;
+    opacity: 1;
+}
+
+button.btn-man {
+    padding: 8px 20px;
+    background: #444;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    white-space: nowrap;
+    transition: background 0.3s ease;
+}
+
+button.btn-man:hover {
+    background: #666;
+}
+
+/* Keep rest of your existing styles here, e.g., card, badges, read-link, etc. */
+
+.card {
+    background: #333;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 0 8px #000;
+}
+
+.cover img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+h2 {
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
+.score {
+    font-weight: normal;
+    margin-bottom: 8px;
+    color: rgb(187, 187, 187);
+    font-size: 1rem;
+}
+
+.description {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-top: 10px;
+    background: #2a2a2a;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px #111;
+}
+
+.top-info {
+    margin-bottom: 12px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.type-badge,
+.launch-year-badge {
+    background-color: #6c757d;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 6px 12px;
+    border-radius: 12px;
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    user-select: none;
+    transition: background 0.3s ease;
+}
+
+.type-badge:hover,
+.launch-year-badge:hover {
+    background: #777;
+    cursor: default;
+}
+
+a.read-link {
+    display: inline-block;
+    margin-top: 15px;
+    background: #444;
+    padding: 10px 18px;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background 0.3s ease;
+}
+
+a.read-link:hover {
+    background: #666;
+}
+
+.info-line {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.section-label {
+    font-weight: bold;
+    color: #bbb;
+    margin-right: 8px;
+    white-space: nowrap;
+}
+
+/* Status badge colors */
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #fff;
+  user-select: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Status specific colors */
+.status-publishing {
+  background-color: #17a2b8; /* teal */
+}
+.status-completed {
+  background-color: #28a745; /* green */
+}
+.status-hiatus {
+  background-color: #ffc107; /* yellow */
+  color: #222;
+}
+.status-discontinued {
+  background-color: #dc3545; /* red */
+}
+.status-upcoming {
+  background-color: #6c757d; /* gray */
+}
+
+/* Genre badges */
+.badge.genre {
+  display: inline-flex;
+  gap: 5px;
+  background-color: #444;
+  color: #eee;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  margin: 4px 8px 4px 0; /* add vertical margin */
+  user-select: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
