@@ -35,7 +35,6 @@ function renderManga(manga) {
   titleEl.textContent = manga.title;
   scoreEl.textContent = manga.score ?? 'N/A';
   
-  // Type and launch year badges
   typeBadge.textContent = manga.type || 'Unknown';
   const year = manga.published?.prop?.from?.year;
   yearBadge.textContent = year ? `Year: ${year}` : 'Year: N/A';
@@ -46,9 +45,7 @@ function renderManga(manga) {
   statusEl.innerHTML = `<span class="badge status ${className}"><i class="${icon}"></i> ${statusText}</span>`;
   
   genresEl.innerHTML = manga.genres.map(g => `<span class="badge genre"><i class="fas fa-tag"></i> ${g.name}</span>`).join('') || 'N/A';
-  
   scoreEl.style.color = window.getComputedStyle(statusEl.querySelector('span') || statusEl).backgroundColor || '#eee';
-  
   descEl.innerHTML = `<span class="section-label">Synopsis:</span> ${manga.synopsis || 'No description available.'}`;
   readBtn.href = manga.url;
   mangaCard.style.display = 'block';
@@ -64,42 +61,56 @@ async function fetchTopManga() {
   }
 }
 
-function getTodayKey() {
-  const today = new Date();
-  return `dailyManga_${today.getFullYear()}_${today.getMonth() + 1}_${today.getDate()}`;
+function weightedRandom(groups) {
+  const totalWeight = groups.reduce((sum, g) => sum + g.weight, 0);
+  let rand = Math.random() * totalWeight;
+  for (const group of groups) {
+    if (rand < group.weight) {
+      const items = group.items;
+      return items[Math.floor(Math.random() * items.length)];
+    }
+    rand -= group.weight;
+  }
 }
 
-async function showDailyManga() {
-  const todayKey = getTodayKey();
-  const saved = localStorage.getItem(todayKey);
-  if (saved) {
-    const manga = JSON.parse(saved);
-    renderManga(manga);
+const TEN_MINUTES = 1000 * 60 * 10;
+
+async function showMangaPeriodically() {
+  const now = Date.now();
+  
+  const savedTime = localStorage.getItem('lastUpdateTime');
+  const savedManga = localStorage.getItem('lastManga');
+  
+  if (savedTime && savedManga && now - parseInt(savedTime, 10) < TEN_MINUTES) {
+    renderManga(JSON.parse(savedManga));
     return;
   }
   
   const topManga = await fetchTopManga();
   if (!topManga) {
-    titleEl.textContent = 'Failed to load daily manga.';
+    titleEl.textContent = 'Failed to load manga.';
     mangaCard.style.display = 'block';
     return;
   }
   
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const diff = now - start;
-  const oneDay = 1000 * 60 * 60 * 24;
-  const dayOfYear = Math.floor(diff / oneDay);
-  const index = dayOfYear % topManga.length;
-  const manga = topManga[index];
+  const groups = [
+    { weight: 30, items: topManga.filter(m => m.type === 'Manga') },
+    { weight: 30, items: topManga.filter(m => m.type === 'Manhua') },
+    { weight: 30, items: topManga.filter(m => m.type === 'Manhwa') },
+    { weight: 10, items: topManga.filter(m => !['Manga', 'Manhua', 'Manhwa'].includes(m.type)) }
+  ].filter(g => g.items.length > 0);
   
-  localStorage.setItem(todayKey, JSON.stringify(manga));
+  const manga = weightedRandom(groups);
+  
+  localStorage.setItem('lastUpdateTime', now.toString());
+  localStorage.setItem('lastManga', JSON.stringify(manga));
+  
   renderManga(manga);
 }
 
 async function searchManga(query) {
   if (!query.trim()) {
-    showDailyManga();
+    showMangaPeriodically();
     return;
   }
   try {
@@ -127,4 +138,6 @@ searchInput.addEventListener('keydown', (e) => {
   }
 });
 
-showDailyManga();
+// Start immediately and check every minute if 10 minutes have passed to update
+showMangaPeriodically();
+setInterval(showMangaPeriodically, 1000 * 60);
